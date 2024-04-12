@@ -21,7 +21,7 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using Race;
 
-using var channel = GrpcChannel.ForAddress("http://localhost:5001");
+using var channel = GrpcChannel.ForAddress("http://server:5001");
 var client = new Racer.RacerClient(channel);
 
 Console.WriteLine($"Race duration: {RaceDuration.TotalSeconds} seconds");
@@ -80,7 +80,7 @@ static async Task BidirectionalStreamingExample(Racer.RacerClient client)
 
     while (sw.Elapsed < RaceDuration)
     {
-        await call.RequestStream.WriteAsync(new RaceMessage { Count = ++sent , Data =  { Enumerable.Range(0, 100000).Select(_ => (double) _ ) }});
+        await call.RequestStream.WriteAsync(new RaceMessage { Count = ++sent , Data =  { Enumerable.Range(0, 1000).Select(_ => (double) _ ) }});
     }
 
     // Finish call and report results

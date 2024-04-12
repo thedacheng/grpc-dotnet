@@ -1,0 +1,22 @@
+version: '3'
+services:
+  server:
+    image: "mcr.microsoft.com/dotnet/sdk:8.0"
+    volumes: 
+      - ../..:/app
+    command: ["dotnet", "run", "--project", "app/examples/Racer/Server"]
+    networks:
+      - network_grpc
+    ports:
+      - "5001:5001"
+  client:
+    image: "mcr.microsoft.com/dotnet/sdk:8.0"
+    volumes: 
+      - ../..:/app
+    command: ["tail", "-f", "/dev/null"]
+    networks:
+      - network_grpc
+networks:
+  network_grpc:
+    name: network_grpc
+    driver: bridge
