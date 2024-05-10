@@ -47,7 +47,7 @@ namespace Server
             var sent = 0;
             while (sw.Elapsed < raceDuration)
             {
-                await responseStream.WriteAsync( new RaceMessage { Count = ++sent , Data =  { Enumerable.Range(0, 1000).Select(_ => (double) _ ) }});
+                await responseStream.WriteAsync( new RaceMessage { Count = ++sent , Data =  { Enumerable.Range(0, 1000).Select(_ => Math.Cos((double) _ )) }});
             }
 
             await readTask;
