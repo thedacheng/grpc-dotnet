@@ -25,14 +25,14 @@ using var channel = GrpcChannel.ForAddress("http://server:5001");
 var client = new Racer.RacerClient(channel);
 
 Console.WriteLine($"Race duration: {RaceDuration.TotalSeconds} seconds");
-Console.WriteLine("Press any key to start race...");
-Console.ReadKey();
+//Console.WriteLine("Press any key to start race...");
+//Console.ReadKey();
 
 await BidirectionalStreamingExample(client);
 
 Console.WriteLine("Finished");
-Console.WriteLine("Press any key to exit...");
-Console.ReadKey();
+//Console.WriteLine("Press any key to exit...");
+//Console.ReadKey();
 
 static async Task BidirectionalStreamingExample(Racer.RacerClient client)
 {
@@ -68,7 +68,9 @@ static async Task BidirectionalStreamingExample(Racer.RacerClient client)
             if (!complete)
             {
                 await Task.Delay(TimeSpan.FromSeconds(1));
-                Console.SetCursorPosition(0, Console.CursorTop - 2);
+                Console.WriteLine($"Messages sent: {sent:n0}");
+                Console.WriteLine($"Messages received: {(lastMessageReceived?.Count ?? 0):n0}");
+                //Console.SetCursorPosition(0, Console.CursorTop - 2);
             }
             else
             {

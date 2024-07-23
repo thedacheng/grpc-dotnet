@@ -1,20 +1,17 @@
 services:
   server:
-    image: "mcr.microsoft.com/dotnet/sdk:8.0"
-    volumes: 
-      - ../..:/app
-    command: ["dotnet", "run", "--project", "app/examples/Racer/Server"]
+    image: "docker.io/chengwork/grpc-dotnet-racer-server:0.6"
     networks:
       - network_grpc
     ports:
       - "5001:5001"
   client:
-    image: "mcr.microsoft.com/dotnet/sdk:8.0"
-    volumes: 
-      - ../..:/app
-    command: ["tail", "-f", "/dev/null"]
+    image: "docker.io/chengwork/grpc-dotnet-racer-client:0.6"
     networks:
       - network_grpc
+    depends_on:
+      server:
+        condition: service_started
 networks:
   network_grpc:
     name: network_grpc
