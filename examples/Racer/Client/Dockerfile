@@ -15,4 +15,4 @@ RUN dotnet publish "/src/examples/Racer/Client/Client.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Client.dll"]
+ENTRYPOINT ["dotnet", "Client.dll", "--urls", "http://server:5001"]

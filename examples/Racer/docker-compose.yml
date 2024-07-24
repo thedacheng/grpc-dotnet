@@ -6,7 +6,8 @@ services:
     ports:
       - "5001:5001"
   client:
-    image: "docker.io/chengwork/grpc-dotnet-racer-client:0.6"
+    image: "docker.io/chengwork/grpc-dotnet-racer-client:0.7"
+#    command: ["dotnet", "Client.dll", "--urls", "http://server:5001"]
     networks:
       - network_grpc
     depends_on:

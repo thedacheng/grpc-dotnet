@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: message-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: myclient
+          image: "docker.io/chengwork/grpc-dotnet-racer-client:0.7"
+          command: ["/bin/sh", "-c"]
+          args: ["dotnet Client.dll --urls http://localhost:5001 && sleep 100"]
+      initContainers:
+        - name: myserver
+          image: "docker.io/chengwork/grpc-dotnet-racer-server:0.6"
+          command: ["dotnet", "Server.dll", "--urls", "http://localhost:5001"]
+          restartPolicy: Always
+          ports:
+            - containerPort: 5001
+      restartPolicy: Never

@@ -17,11 +17,19 @@
 #endregion
 
 using System.Diagnostics;
+using System.Threading;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Race;
 
-using var channel = GrpcChannel.ForAddress("http://server:5001");
+//string urls = "http://localhost:5001";
+string urls = "http://server:5001";
+if (args.Length > 1)
+{
+    urls = args[1];
+}
+Thread.Sleep(3000); // wait for server to start
+using var channel = GrpcChannel.ForAddress(urls);
 var client = new Racer.RacerClient(channel);
 
 Console.WriteLine($"Race duration: {RaceDuration.TotalSeconds} seconds");
